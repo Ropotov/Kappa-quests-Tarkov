@@ -1,4 +1,4 @@
-package com.nvropotov.kappaqueststarkov.ui.theme
+package com.nvropotov.kappaqueststarkov.presentation.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

@@ -1,10 +1,10 @@
-package com.nvropotov.kappaqueststarkov
+package com.nvropotov.kappaqueststarkov.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.nvropotov.kappaqueststarkov.ui.theme.KappaQuestsTarkovTheme
+import com.nvropotov.kappaqueststarkov.presentation.theme.KappaQuestsTarkovTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
