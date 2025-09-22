@@ -25,7 +25,7 @@ import com.nvropotov.kappaqueststarkov.presentation.theme.secondary
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun ModalDialog(
+fun ModalDialog(
     @StringRes title: Int,
     @StringRes description: Int,
     onDismiss: () -> Unit,

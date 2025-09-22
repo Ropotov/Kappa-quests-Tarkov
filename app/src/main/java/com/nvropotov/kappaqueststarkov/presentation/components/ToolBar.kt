@@ -28,7 +28,7 @@ import com.nvropotov.kappaqueststarkov.presentation.theme.primary
 import com.nvropotov.kappaqueststarkov.presentation.theme.secondary
 
 @Composable
-private fun ToolBar(
+fun ToolBar(
     selected: Filter,
     onSelect: (Filter) -> Unit,
     onSearchClick: () -> Unit,
