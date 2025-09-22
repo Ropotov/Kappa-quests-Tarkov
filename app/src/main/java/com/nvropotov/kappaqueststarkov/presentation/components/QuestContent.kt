@@ -31,7 +31,7 @@ import kotlinx.collections.immutable.toPersistentList
 
 @SuppressLint("UnrememberedMutableState")
 @Composable
-fun QuestsContent(viewModel: MainViewModel = viewModel(), data: PersistentList<Quest>) {
+fun QuestsContent(viewModel: MainViewModel, data: PersistentList<Quest>) {
     val scrollState = rememberLazyListState()
     val context = LocalContext.current
     var selected by remember { mutableStateOf(Filter.NOT_FILTER) }
