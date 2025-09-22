@@ -23,7 +23,7 @@ import com.nvropotov.kappaqueststarkov.presentation.theme.secondary
 import com.nvropotov.kappaqueststarkov.presentation.theme.text
 
 @Composable
-private fun Quest(
+fun Quest(
     quest: Quest,
     openLink: (String) -> Unit,
     select: (Quest) -> Unit,
