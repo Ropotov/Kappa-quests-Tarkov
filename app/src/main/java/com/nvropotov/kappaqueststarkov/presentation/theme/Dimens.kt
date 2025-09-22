@@ -62,7 +62,7 @@ class Dimens(
     val dp114: Dp = 114.dp,
     val dp120: Dp = 120.dp,
     val dp136: Dp = 136.dp,
-    val dp146: Dp = 146.dp,
+    val dp140: Dp = 140.dp,
     val dp148: Dp = 148.dp,
     val dp154: Dp = 154.dp,
     val dp160: Dp = 160.dp,
