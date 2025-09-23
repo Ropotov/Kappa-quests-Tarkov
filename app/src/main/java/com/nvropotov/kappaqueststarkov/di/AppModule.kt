@@ -1,8 +1,11 @@
 package com.nvropotov.kappaqueststarkov.di
 
 import android.app.Application
+import com.nvropotov.kappaqueststarkov.data.QuestRepositoryImpl
+import com.nvropotov.kappaqueststarkov.data.database.QuestDao
 import com.nvropotov.kappaqueststarkov.data.database.QuestDatabase.Companion.getMainDatabase
 import com.nvropotov.kappaqueststarkov.data.network.QuestApi
+import com.nvropotov.kappaqueststarkov.domain.repository.QuestRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,7 +33,7 @@ class AppModule {
 
     @Provides
     fun provideOkHttpClient(
-        loggingInterceptor: HttpLoggingInterceptor
+        loggingInterceptor: HttpLoggingInterceptor,
     ): OkHttpClient =
         OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
@@ -38,7 +41,7 @@ class AppModule {
 
     @Provides
     fun provideQuestApi(
-        okHttpClient: OkHttpClient
+        okHttpClient: OkHttpClient,
     ): QuestApi =
         Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -47,4 +50,10 @@ class AppModule {
             .build()
             .create(QuestApi::class.java)
 
+    @Provides
+    fun provideQuestRepository(
+        questApi: QuestApi,
+        questDao: QuestDao,
+    ): QuestRepository =
+        QuestRepositoryImpl(questApi, questDao)
 }
