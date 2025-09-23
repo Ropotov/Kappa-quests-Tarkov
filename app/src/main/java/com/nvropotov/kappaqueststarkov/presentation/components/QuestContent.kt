@@ -19,7 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.net.toUri
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nvropotov.kappaqueststarkov.R
 import com.nvropotov.kappaqueststarkov.domain.models.Filter
 import com.nvropotov.kappaqueststarkov.domain.models.Quest
@@ -58,8 +57,7 @@ fun QuestsContent(viewModel: MainViewModel, data: PersistentList<Quest>) {
     val onSearchClick = remember { { showSearch = !showSearch } }
     val openLink: (String) -> Unit =
         remember { { context.startActivity(Intent(Intent.ACTION_VIEW, it.toUri())) } }
-    //TODO
-    val select: (Quest) -> Unit = remember { { } }
+    val select: (Quest) -> Unit = remember { { viewModel.selected(it) } }
 
     LaunchedEffect(localList) {
         if (localList.isEmpty() && selected != Filter.NOT_FILTER) {
