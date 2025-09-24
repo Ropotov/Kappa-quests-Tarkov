@@ -1,10 +1,11 @@
 package com.nvropotov.kappaqueststarkov.presentation
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.nvropotov.kappaqueststarkov.presentation.theme.KappaQuestsTarkovTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -13,9 +14,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            KappaQuestsTarkovTheme {
-                QuestsScreen()
-            }
+            QuestsScreen()
         }
     }
 }

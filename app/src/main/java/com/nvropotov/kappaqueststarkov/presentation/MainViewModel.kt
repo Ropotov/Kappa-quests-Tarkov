@@ -6,6 +6,7 @@ import com.nvropotov.kappaqueststarkov.domain.models.Quest
 import com.nvropotov.kappaqueststarkov.domain.repository.QuestRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toPersistentList
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
@@ -21,7 +22,9 @@ class MainViewModel @Inject constructor(
     private val questRepository: QuestRepository,
 ) : ViewModel() {
 
-    private val _screenState = MutableStateFlow<ScreenState>(ScreenState.Initial)
+    private var loadQuestJob: Job? = null
+
+    private val _screenState = MutableStateFlow<ScreenState>(ScreenState.Loading)
     val screenState get() = _screenState.asStateFlow()
 
     init {
@@ -33,13 +36,23 @@ class MainViewModel @Inject constructor(
             questRepository.updateQuest(quest)
         }
     }
+    fun refresh() {
+        _screenState.tryEmit(ScreenState.Loading)
+        loadQuestJob?.cancel()
+        loadQuest()
+    }
 
     private fun loadQuest() {
-        questRepository.getQuestInDatabase()
+        loadQuestJob = questRepository.getQuestInDatabase()
             .onStart { questRepository.getQuestInApi() }
             .map { ScreenState.SuccessLoaded(it.toPersistentList()) }
             .onEach { _screenState.tryEmit(it) }
             .catch { _screenState.tryEmit(ScreenState.ErrorLoaded) }
             .launchIn(viewModelScope)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        loadQuestJob?.cancel()
     }
 }

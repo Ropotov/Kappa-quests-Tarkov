@@ -22,6 +22,7 @@ import androidx.compose.ui.window.DialogProperties
 import com.nvropotov.kappaqueststarkov.presentation.theme.KappaQuestsTarkovTheme
 import com.nvropotov.kappaqueststarkov.presentation.theme.accent
 import com.nvropotov.kappaqueststarkov.presentation.theme.secondary
+import com.nvropotov.kappaqueststarkov.presentation.theme.text
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -65,6 +66,7 @@ fun ModalDialog(
                 Text(
                     text = stringResource(title),
                     fontSize = dimens.sp24,
+                    color = text,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.padding(
                         start = dimens.dp16,
@@ -75,6 +77,7 @@ fun ModalDialog(
                 Text(
                     text = stringResource(description),
                     fontSize = dimens.sp16,
+                    color = text,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.padding(
                         start = dimens.dp16,

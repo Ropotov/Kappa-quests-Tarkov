@@ -26,6 +26,7 @@ import com.nvropotov.kappaqueststarkov.domain.models.Filter
 import com.nvropotov.kappaqueststarkov.presentation.theme.KappaQuestsTarkovTheme
 import com.nvropotov.kappaqueststarkov.presentation.theme.primary
 import com.nvropotov.kappaqueststarkov.presentation.theme.secondary
+import com.nvropotov.kappaqueststarkov.presentation.theme.text
 
 @Composable
 fun ToolBar(
@@ -49,6 +50,7 @@ fun ToolBar(
             Text(
                 text = "TarkovKappaQuests",
                 fontSize = dimens.sp24,
+                color = text,
                 textAlign = TextAlign.Center,
             )
         }
