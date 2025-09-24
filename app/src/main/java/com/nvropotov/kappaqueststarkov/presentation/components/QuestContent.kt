@@ -5,6 +5,8 @@ import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -75,7 +77,7 @@ fun QuestsContent(viewModel: MainViewModel, data: PersistentList<Quest>) {
                     onSearchClick,
                 )
             },
-            modifier = Modifier.background(Color.Transparent)
+            modifier = Modifier.background(Color.Transparent).navigationBarsPadding()
         ) { paddingValues ->
             if (showSearch) {
                 CustomSearchBar(
@@ -107,6 +109,7 @@ fun QuestsContent(viewModel: MainViewModel, data: PersistentList<Quest>) {
                 state = scrollState,
                 modifier = Modifier
                     .background(primary)
+                    .padding(top = KappaQuestsTarkovTheme.dimens.dp8)
                     .fillMaxSize(),
                 contentPadding = paddingValues
             ) {

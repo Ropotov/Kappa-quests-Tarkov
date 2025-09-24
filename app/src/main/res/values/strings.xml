@@ -4,4 +4,7 @@
     <string name="cancel">Отмена</string>
     <string name="not_completed_title">Выполненных заданий нет</string>
     <string name="not_completed_description">Выполняй задания и отмечай свой прогресс</string>
+    <string name="error_title">404</string>
+    <string name="error_description">Упс... Что-то не получилось\nпопробуйте еще раз</string>
+    <string name="refresh">Повторить</string>
 </resources>
