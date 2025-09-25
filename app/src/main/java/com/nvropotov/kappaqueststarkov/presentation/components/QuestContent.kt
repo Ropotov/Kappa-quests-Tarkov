@@ -1,7 +1,6 @@
 package com.nvropotov.kappaqueststarkov.presentation.components
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,11 +19,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.core.net.toUri
+import androidx.navigation.NavController
 import com.nvropotov.kappaqueststarkov.R
 import com.nvropotov.kappaqueststarkov.domain.models.Filter
 import com.nvropotov.kappaqueststarkov.domain.models.Quest
 import com.nvropotov.kappaqueststarkov.presentation.MainViewModel
+import com.nvropotov.kappaqueststarkov.presentation.Route
 import com.nvropotov.kappaqueststarkov.presentation.theme.KappaQuestsTarkovTheme
 import com.nvropotov.kappaqueststarkov.presentation.theme.primary
 import kotlinx.collections.immutable.PersistentList
@@ -32,9 +32,12 @@ import kotlinx.collections.immutable.toPersistentList
 
 @SuppressLint("UnrememberedMutableState")
 @Composable
-fun QuestsContent(viewModel: MainViewModel, data: PersistentList<Quest>) {
+fun QuestsContent(
+    viewModel: MainViewModel,
+    data: PersistentList<Quest>,
+    navController: NavController,
+) {
     val scrollState = rememberLazyListState()
-    val context = LocalContext.current
     var selected by remember { mutableStateOf(Filter.NOT_FILTER) }
     var showModal by remember { mutableStateOf(false) }
     var showSearch by remember { mutableStateOf(false) }
@@ -57,8 +60,7 @@ fun QuestsContent(viewModel: MainViewModel, data: PersistentList<Quest>) {
 
     val onSelect: (Filter) -> Unit = remember { { selected = it } }
     val onSearchClick = remember { { showSearch = !showSearch } }
-    val openLink: (String) -> Unit =
-        remember { { context.startActivity(Intent(Intent.ACTION_VIEW, it.toUri())) } }
+    val openLink: (String) -> Unit = remember { { navController.navigate(Route.WebView(it)) } }
     val select: (Quest) -> Unit = remember { { viewModel.selected(it) } }
 
     LaunchedEffect(localList) {
@@ -77,7 +79,9 @@ fun QuestsContent(viewModel: MainViewModel, data: PersistentList<Quest>) {
                     onSearchClick,
                 )
             },
-            modifier = Modifier.background(Color.Transparent).navigationBarsPadding()
+            modifier = Modifier
+                .background(Color.Transparent)
+                .navigationBarsPadding()
         ) { paddingValues ->
             if (showSearch) {
                 CustomSearchBar(
