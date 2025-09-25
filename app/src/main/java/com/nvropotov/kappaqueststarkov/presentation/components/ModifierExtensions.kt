@@ -38,7 +38,7 @@ fun Modifier.circleSelectionBorder(
     }
 }
 
-fun Modifier.marqueeOnLongPress(): Modifier = composed {
+fun Modifier.marqueeOnLongPress(onClick: () -> Unit): Modifier = composed {
     var marqueeActive by remember { mutableStateOf(false) }
     this
         .pointerInput(Unit) {
@@ -47,6 +47,7 @@ fun Modifier.marqueeOnLongPress(): Modifier = composed {
                 onPress = {
                     awaitRelease()
                     marqueeActive = false
+                    onClick()
                 }
             )
         }
