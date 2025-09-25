@@ -2,6 +2,9 @@ package com.nvropotov.kappaqueststarkov.presentation.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.basicMarquee
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,8 +14,12 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import com.nvropotov.kappaqueststarkov.R
@@ -29,6 +36,7 @@ fun Quest(
     select: (Quest) -> Unit,
 ) {
     val dimens = KappaQuestsTarkovTheme.dimens
+
     Box(
         modifier = Modifier
             .padding(horizontal = dimens.dp24, vertical = dimens.dp4)
@@ -40,6 +48,7 @@ fun Quest(
             .clickableNoRipple { openLink(quest.url) }
     ) {
         Row(
+            horizontalArrangement = Arrangement.spacedBy(dimens.dp8),
             modifier = Modifier.padding(horizontal = dimens.dp16, vertical = dimens.dp8)
         ) {
             val image = if (quest.isCompleted) {
@@ -47,15 +56,15 @@ fun Quest(
             } else {
                 R.drawable.ic_not_completed
             }
-
             Text(
                 text = quest.title,
                 color = text,
-                modifier = Modifier.weight(1f),
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1,
+                modifier = Modifier
+                    .weight(1f)
+                    .marqueeOnLongPress(),
             )
-
             Image(
                 painter = painterResource(image),
                 contentDescription = null,
