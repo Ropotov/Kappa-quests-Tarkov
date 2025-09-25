@@ -24,7 +24,7 @@ import com.nvropotov.kappaqueststarkov.R
 import com.nvropotov.kappaqueststarkov.domain.models.Filter
 import com.nvropotov.kappaqueststarkov.domain.models.Quest
 import com.nvropotov.kappaqueststarkov.presentation.MainViewModel
-import com.nvropotov.kappaqueststarkov.presentation.Route
+import com.nvropotov.kappaqueststarkov.presentation.navigation.Route
 import com.nvropotov.kappaqueststarkov.presentation.theme.KappaQuestsTarkovTheme
 import com.nvropotov.kappaqueststarkov.presentation.theme.primary
 import kotlinx.collections.immutable.PersistentList
