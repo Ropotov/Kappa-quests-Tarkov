@@ -18,13 +18,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import com.nvropotov.kappaqueststarkov.R
 import com.nvropotov.kappaqueststarkov.domain.models.Filter
 import com.nvropotov.kappaqueststarkov.domain.models.Quest
 import com.nvropotov.kappaqueststarkov.presentation.MainViewModel
-import com.nvropotov.kappaqueststarkov.presentation.Route
+import com.nvropotov.kappaqueststarkov.presentation.navigation.Route
 import com.nvropotov.kappaqueststarkov.presentation.theme.KappaQuestsTarkovTheme
 import com.nvropotov.kappaqueststarkov.presentation.theme.primary
 import kotlinx.collections.immutable.PersistentList
@@ -39,7 +38,7 @@ fun QuestsContent(
 ) {
     val scrollState = rememberLazyListState()
     var selected by remember { mutableStateOf(Filter.NOT_FILTER) }
-    var showModal by remember { mutableStateOf(false) }
+    var showModal by remember { mutableStateOf(ShowModal.NO) }
     var showSearch by remember { mutableStateOf(false) }
     var searchText by remember { mutableStateOf(String()) }
 
@@ -64,9 +63,16 @@ fun QuestsContent(
     val select: (Quest) -> Unit = remember { { viewModel.selected(it) } }
 
     LaunchedEffect(localList) {
-        if (localList.isEmpty() && selected != Filter.NOT_FILTER) {
-            selected = Filter.NOT_FILTER
-            showModal = true
+        when {
+            (localList.isEmpty() && selected == Filter.COMPLETED) -> {
+                selected = Filter.NOT_FILTER
+                showModal = ShowModal.FULL
+            }
+
+            (localList.isEmpty() && selected == Filter.NOT_COMPLETED) -> {
+                selected = Filter.NOT_FILTER
+                showModal = ShowModal.EMPTY
+            }
         }
     }
 
@@ -102,12 +108,22 @@ fun QuestsContent(
                     }
                 }
             }
-            if (showModal) {
-                ModalDialog(
-                    title = R.string.not_completed_title,
-                    description = R.string.not_completed_description,
-                    onDismiss = { showModal = false }
-                )
+            when(showModal) {
+                ShowModal.NO -> {}
+                ShowModal.FULL -> {
+                    ModalDialog(
+                        title = R.string.not_completed_title,
+                        description = R.string.not_completed_description,
+                        onDismiss = { showModal = ShowModal.NO }
+                    )
+                }
+                ShowModal.EMPTY -> {
+                    ModalDialog(
+                        title = R.string.completed_title,
+                        description = R.string.completed_description,
+                        onDismiss = { showModal = ShowModal.NO }
+                    )
+                }
             }
             LazyColumn(
                 state = scrollState,

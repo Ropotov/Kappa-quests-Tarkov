@@ -2,6 +2,7 @@ package com.nvropotov.kappaqueststarkov.presentation.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,6 +30,7 @@ fun Quest(
     select: (Quest) -> Unit,
 ) {
     val dimens = KappaQuestsTarkovTheme.dimens
+
     Box(
         modifier = Modifier
             .padding(horizontal = dimens.dp24, vertical = dimens.dp4)
@@ -40,6 +42,7 @@ fun Quest(
             .clickableNoRipple { openLink(quest.url) }
     ) {
         Row(
+            horizontalArrangement = Arrangement.spacedBy(dimens.dp8),
             modifier = Modifier.padding(horizontal = dimens.dp16, vertical = dimens.dp8)
         ) {
             val image = if (quest.isCompleted) {
@@ -47,15 +50,15 @@ fun Quest(
             } else {
                 R.drawable.ic_not_completed
             }
-
             Text(
                 text = quest.title,
                 color = text,
-                modifier = Modifier.weight(1f),
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1,
+                modifier = Modifier
+                    .weight(1f)
+                    .marqueeOnLongPress(onClick = { openLink(quest.url) }),
             )
-
             Image(
                 painter = painterResource(image),
                 contentDescription = null,
